@@ -1,0 +1,11 @@
+# Dependencies
+node_modules/
+
+# Secrets - real API keys live in .env / .env.local and in Vercel's settings, never in git
+.env
+.env.*
+!.env.example
+
+# Local-only files
+server.log
+.vercel/

@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prism</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;600;700;800&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+<!-- Vercel Web Analytics - only records events once the project has it enabled (paid feature) -->
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<div class="app-shell">
+
+  <div class="topbar">
+    <div class="brand">
+      <svg width="26" height="26" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="28" height="28" rx="8" fill="#d7f0e9"/>
+        <path d="M9 21 L15 9 L21 21" stroke="#0a6b5c" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path d="M11.5 16 H18.5" stroke="#0f9b86" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      <span>Prism</span>
+    </div>
+    <div class="topbar-right">
+      <span class="step-label" id="step-label"></span>
+      <button class="icon-btn" id="btn-settings" aria-haspopup="dialog" aria-expanded="false" aria-controls="settings-panel" title="Reading settings">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" stroke="currentColor" stroke-width="2"/><path d="M19.4 13a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.2.61.78 1.05 1.42 1.09H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Reading settings</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Reading settings: applied to <html> as data-* attributes and persisted in localStorage,
+       so a learner's presentation choices survive reloads and every screen. -->
+  <div class="settings-backdrop" id="settings-backdrop" hidden></div>
+  <div class="settings-panel" id="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settings-title" hidden>
+    <div class="settings-head">
+      <h2 id="settings-title" style="font-size:1.15rem;">Reading settings</h2>
+      <button class="icon-btn" id="btn-settings-close" title="Close">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        <span class="sr-only">Close</span>
+      </button>
+    </div>
+    <p style="margin:0; font-size:.85rem; color:var(--muted);">These change how text looks everywhere in Prism. Nothing here changes the words themselves.</p>
+
+    <fieldset class="settings-group">
+      <legend>Text size</legend>
+      <div class="seg-control" data-setting="textSize">
+        <button data-value="s">Small</button>
+        <button data-value="m">Default</button>
+        <button data-value="l">Large</button>
+        <button data-value="xl">Largest</button>
+      </div>
+    </fieldset>
+
+    <fieldset class="settings-group">
+      <legend>Line spacing</legend>
+      <div class="seg-control" data-setting="lineHeight">
+        <button data-value="normal">Normal</button>
+        <button data-value="relaxed">Relaxed</button>
+        <button data-value="loose">Loose</button>
+      </div>
+    </fieldset>
+
+    <fieldset class="settings-group">
+      <legend>Letter spacing</legend>
+      <div class="seg-control" data-setting="letterSpacing">
+        <button data-value="normal">Normal</button>
+        <button data-value="wide">Wide</button>
+        <button data-value="wider">Widest</button>
+      </div>
+    </fieldset>
+
+    <fieldset class="settings-group">
+      <legend>Typeface</legend>
+      <div class="seg-control" data-setting="typeface">
+        <button data-value="default">Hyperlegible</button>
+        <button data-value="dyslexia">Dyslexia-friendly</button>
+        <button data-value="serif">Serif</button>
+      </div>
+    </fieldset>
+
+    <fieldset class="settings-group">
+      <legend>Colour theme</legend>
+      <div class="seg-control" data-setting="theme">
+        <button data-value="light">Light</button>
+        <button data-value="dark">Dark</button>
+        <button data-value="hc">High contrast</button>
+      </div>
+    </fieldset>
+
+    <fieldset class="settings-group">
+      <label class="settings-toggle">
+        <input type="checkbox" id="set-reduce-motion">
+        <span>Reduce motion &amp; animation</span>
+      </label>
+      <label class="settings-toggle">
+        <input type="checkbox" id="set-ruler">
+        <span>Reading ruler (follows your cursor)</span>
+      </label>
+    </fieldset>
+
+    <button class="btn btn-ghost" id="btn-settings-reset" style="align-self:flex-start;">Reset to defaults</button>
+  </div>
+  <div class="reading-ruler" id="reading-ruler" hidden></div>
+
+  <div class="progress" id="progress" hidden>
+    <div class="seg" data-seg="1"></div>
+    <div class="seg" data-seg="2"></div>
+    <div class="seg" data-seg="3"></div>
+    <div class="seg" data-seg="4"></div>
+    <div class="seg" data-seg="5"></div>
+  </div>
+
+  <!-- 1. Home -->
+  <section class="screen active" id="screen-home">
+    <div class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">An accessibility layer for learning</span>
+        <h1>The same knowledge.<br>A different path to understanding.</h1>
+        <p style="font-size:1.15rem; color:var(--ink-soft); max-width:56ch; margin:0 auto;">
+          Paste any lesson. Choose how you'd like to see it. The facts stay exactly the same — only the shape changes.
+        </p>
+      </div>
+      <div class="cta-row">
+        <button class="btn btn-primary" id="btn-start">
+          Add your own lesson
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="btn btn-secondary" id="btn-sample">Try the sample lesson</button>
+        <button class="btn btn-secondary" id="btn-load-session">Load a saved session</button>
+        <input type="file" id="file-load" accept="application/json" hidden>
+      </div>
+      <div class="tag-row">
+        <span class="tag" data-mode="readable">Shorter, clearer blocks</span>
+        <span class="tag" data-mode="focused">One idea at a time</span>
+        <span class="tag" data-mode="visual">Real diagrams, not more text</span>
+        <span class="tag" data-mode="compare">Plain vocabulary, kept precise</span>
+      </div>
+    </div>
+    <div class="footer-note">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2l7 3v6c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V5l7-3z" stroke="#767f88" stroke-width="1.8" stroke-linejoin="round"/></svg>
+      Your text stays in this session — nothing is stored or shared.
+    </div>
+  </section>
+
+  <!-- 2. Content input -->
+  <section class="screen" id="screen-input">
+    <div class="page">
+      <div class="page-inner">
+        <div style="display:flex; flex-direction:column; gap:.5rem;">
+          <h1 style="font-size:1.9rem;">What would you like to understand?</h1>
+          <p style="color:var(--ink-soft); font-size:1.05rem; max-width:60ch;">Paste a passage to adapt, or just ask a question — either way, we'll keep every fact and you choose how it's shown next.</p>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:.6rem;">
+          <label for="source-text" style="font-weight:700; font-size:.98rem;">Your lesson text, or a question</label>
+          <textarea id="source-text" placeholder="Paste a lesson passage, or ask something like &quot;What is a habitat?&quot;"></textarea>
+          <div class="field-meta">
+            <span id="source-hint">Paste your own text, ask a question, or try an example below</span>
+            <span id="char-count" style="font-variant-numeric:tabular-nums;">0 characters</span>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+          <button class="btn btn-secondary" id="btn-sample-2">Use the sample lesson</button>
+          <button class="btn btn-secondary" id="btn-sample-question">Try "What is a habitat?"</button>
+          <button class="btn btn-primary" id="btn-to-preference" style="margin-left:auto;" disabled>
+            Continue
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Preference -->
+  <section class="screen" id="screen-preference">
+    <div class="page">
+      <div class="page-inner wide">
+        <div style="display:flex; flex-direction:column; gap:.5rem;">
+          <h1 style="font-size:1.9rem;">How would you like this presented?</h1>
+          <p style="color:var(--ink-soft); font-size:1.05rem; max-width:62ch;">Every option teaches the same material — pick whichever helps you most right now. You can switch anytime once you're in.</p>
+        </div>
+
+        <div class="mode-grid" id="mode-grid">
+          <button class="mode-card" data-mode="readable">
+            <div class="mode-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h11M4 18h8" stroke="#0a6b5c" stroke-width="2.2" stroke-linecap="round"/></svg></div>
+            <h3 style="font-size:1.15rem;">Readable</h3>
+            <p style="margin:0; color:var(--ink-soft); font-size:.95rem;">Short blocks, clear headings, generous spacing. Technical words stay, defined in plain terms.</p>
+          </button>
+          <button class="mode-card" data-mode="focused">
+            <div class="mode-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="#0a6b5c" stroke-width="2.2"/><circle cx="12" cy="12" r="3" fill="#0a6b5c"/></svg></div>
+            <h3 style="font-size:1.15rem;">Focused</h3>
+            <p style="margin:0; color:var(--ink-soft); font-size:.95rem;">One idea revealed at a time, in order, ending with a short takeaway.</p>
+          </button>
+          <button class="mode-card" data-mode="visual">
+            <div class="mode-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="6" r="2.4" stroke="#0a6b5c" stroke-width="2"/><circle cx="18" cy="6" r="2.4" stroke="#0a6b5c" stroke-width="2"/><circle cx="12" cy="18" r="2.4" stroke="#0a6b5c" stroke-width="2"/><path d="M8 7l3 9M16 7l-3 9" stroke="#0a6b5c" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <h3 style="font-size:1.15rem;">Visual</h3>
+            <p style="margin:0; color:var(--ink-soft); font-size:.95rem;">A real diagram of how the pieces connect — not another paragraph to read.</p>
+          </button>
+          <button class="mode-card" data-mode="compare">
+            <div class="mode-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="8" height="14" rx="1.5" stroke="#0a6b5c" stroke-width="2"/><rect x="13" y="5" width="8" height="14" rx="1.5" stroke="#0a6b5c" stroke-width="2"/></svg></div>
+            <h3 style="font-size:1.15rem;">Compare</h3>
+            <p style="margin:0; color:var(--ink-soft); font-size:.95rem;">See the original next to every version at once, side by side.</p>
+          </button>
+        </div>
+
+        <button class="btn btn-primary" id="btn-generate" style="align-self:flex-end;" disabled>
+          <span id="generate-label">Continue</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="loading" id="generating" hidden><div class="spinner"></div> Extracting concepts, then adapting the presentation…</div>
+        <div class="error-box" id="generate-error" hidden></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Adapted lesson -->
+  <section class="screen" id="screen-lesson">
+    <div class="tabs" id="mode-tabs">
+      <button class="tab" data-mode="readable">Readable</button>
+      <button class="tab" data-mode="focused">Focused</button>
+      <button class="tab" data-mode="visual">Visual</button>
+      <button class="tab" data-mode="compare">Compare</button>
+    </div>
+
+    <div class="readaloud" id="readaloud" data-context="lesson">
+      <button class="btn btn-ghost readaloud-toggle" id="ra-toggle" aria-pressed="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span id="ra-toggle-label">Read aloud</span>
+      </button>
+      <button class="btn btn-ghost" id="ra-stop" hidden>Stop</button>
+      <label class="ra-speed">Speed
+        <select id="ra-speed">
+          <option value="0.8">0.8×</option>
+          <option value="1" selected>1×</option>
+          <option value="1.25">1.25×</option>
+          <option value="1.5">1.5×</option>
+        </select>
+      </label>
+      <span class="ra-note" id="ra-note" hidden>Read aloud is not available in this browser.</span>
+    </div>
+
+    <div class="lesson-grid">
+      <div id="lesson-content" style="display:flex; flex-direction:column; gap:1.1rem; min-height:300px;"></div>
+
+      <div class="fidelity-panel">
+        <div style="display:flex; align-items:center; gap:.6rem;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2l7 3v6c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V5l7-3z" stroke="#0a6b5c" stroke-width="2" stroke-linejoin="round"/></svg>
+          <h3 style="font-size:1.05rem;">Fidelity check</h3>
+        </div>
+        <p style="margin:0; font-size:.88rem; color:var(--ink-soft);">Same in every mode — this is the same lesson as the original, reshaped, not simplified. Select anything below to see where it sits in the source.</p>
+        <div id="fidelity-pills" style="display:flex; flex-wrap:wrap; gap:.4rem;"></div>
+
+        <div class="fidelity-section">
+          <span class="fidelity-label">Concepts carried through <span class="fidelity-count" id="fidelity-concept-count"></span></span>
+          <div id="fidelity-concepts" class="chip-row"></div>
+        </div>
+
+        <div class="fidelity-section" id="fidelity-aids-section" hidden>
+          <span class="fidelity-label">Learning aids added <span class="fidelity-hint">— labelled, not from the source</span></span>
+          <div id="fidelity-aids" class="chip-row"></div>
+        </div>
+
+        <div class="fidelity-section" id="fidelity-additions-section" hidden>
+          <span class="fidelity-label fidelity-label-warn">Unsupported additions</span>
+          <div id="fidelity-additions" class="chip-row"></div>
+        </div>
+
+        <details class="fidelity-source" id="fidelity-source-wrap">
+          <summary>Show the source text</summary>
+          <p id="fidelity-source" class="source-text"></p>
+        </details>
+      </div>
+    </div>
+
+    <div style="display:flex; justify-content:space-between; align-items:center; padding: 0 clamp(1.2rem,4vw,3rem) 2rem clamp(1.2rem,4vw,3rem);">
+      <button class="btn btn-secondary" id="btn-save-session">Save session</button>
+      <button class="btn btn-primary" id="btn-to-quiz">
+        Check understanding
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- 5. Quiz -->
+  <section class="screen" id="screen-quiz">
+    <div class="readaloud" id="readaloud-quiz" data-context="quiz">
+      <button class="btn btn-ghost readaloud-toggle" id="raq-toggle" aria-pressed="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span id="raq-toggle-label">Read this question aloud</span>
+      </button>
+      <button class="btn btn-ghost" id="raq-stop" hidden>Stop</button>
+    </div>
+    <div class="page">
+      <div class="page-inner" id="quiz-body"></div>
+    </div>
+  </section>
+
+</div>
+<script src="app.js"></script>
+</body>
+</html>
